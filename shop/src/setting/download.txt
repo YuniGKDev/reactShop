@@ -49,5 +49,8 @@ npm i date-fns
 #react-error-boundaries
 npm install react-error-boundary
 
+#react-toastify
+npm i react-toastify
+
 #추천 라이브러리
 https://ykss.netlify.app/translation/react_libraries_for_2024/

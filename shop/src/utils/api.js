@@ -1,4 +1,5 @@
-import axios from "axios";
+import axios from 'axios';
+
 // 상황따라 주소 다름
 const LOCAL_BACKEND = process.env.REACT_APP_LOCAL_BACKEND;
 //const PROD_BACKEND = process.env.REACT_APP_PROD_BACKEND;
@@ -6,14 +7,14 @@ const LOCAL_BACKEND = process.env.REACT_APP_LOCAL_BACKEND;
 
 const api = axios.create({
   baseURL: `${LOCAL_BACKEND}/api`,
+  timeout: 1000,
   headers: {
     "Content-Type": "application/json",
     authorization: `Bearer ${sessionStorage.getItem("token")}`,
   },
 });
-/**
- * console.log all requests and responses
- */
+
+// 요청 인터셉터 추가하기
 api.interceptors.request.use(
   (request) => {
     console.log("Starting Request", request);
@@ -25,15 +26,12 @@ api.interceptors.request.use(
   }
 );
 
-api.interceptors.response.use(
-  (response) => {
-    return response;
-  },
-  function (error) {
-    error = error.response.data;
-    console.log("RESPONSE ERROR", error);
-    return Promise.reject(error);
-  }
-);
+// 응답 인터셉터 추가하기
+axios.interceptors.response.use(function (response) {
+return response;
+}, function (error) {
+  console.log("RESPONSE ERROR", error);
+  return Promise.reject(error);
+});
 
 export default api;
